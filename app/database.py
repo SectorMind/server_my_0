@@ -1,24 +1,17 @@
-# Database connection setup
-"""
-This code does the following:
-
-    Defines the database URL. You can obtain this URL from your PostgreSQL database provider or set it as an environment variable for security.
-    Creates a SQLAlchemy engine using the database URL.
-    Creates a session factory using sessionmaker.
-    Defines a base class for declarative models.
-    Defines a get_db() function that yields a new database session for each request. This function will be used with FastAPI's dependency injection system to provide a database session to your route functions.
-
-Once you've set up the database.py file, you can move on to defining the SQLAlchemy models in the models.py file.
-"""
+# app/database.py
 
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 import os
+from dotenv import load_dotenv  # pip install python-dotenv
 
+
+load_dotenv()
 # Database URL
-DATABASE_URL = os.getenv("DATABASE_URL")  # Update with your actual database URL
+# DATABASE_URL = os.getenv("DATABASE_URL_EASY")  # Update with your actual database URL
+DATABASE_URL = "postgresql://postgres:fortune+saw3@localhost:5432/my_easy"
 
 # Create SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
@@ -40,3 +33,4 @@ def get_db():
         raise
     finally:
         db.close()
+
