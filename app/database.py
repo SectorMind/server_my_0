@@ -6,12 +6,12 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.exc import SQLAlchemyError
 import os
 from dotenv import load_dotenv  # pip install python-dotenv
+import psycopg2
 
 
 load_dotenv()
 # Database URL
-# DATABASE_URL = os.getenv("DATABASE_URL_EASY")  # Update with your actual database URL
-DATABASE_URL = "postgresql://postgres:fortune+saw3@localhost:5432/my_easy"
+DATABASE_URL = os.getenv("DATABASE_URL_EASY")  # Update with your actual database URL
 
 # Create SQLAlchemy engine
 engine = create_engine(DATABASE_URL)
