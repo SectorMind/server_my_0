@@ -16,6 +16,7 @@ logging.basicConfig(
 
 app = FastAPI()
 
+# TODO: combine it in the separate function
 # Create database tables
 Base.metadata.create_all(bind=engine)
 
