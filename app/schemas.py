@@ -8,6 +8,7 @@ from typing import List, Optional
 
 class RoleEnum(enum.Enum):
     ADMIN = "admin"
+    MODERATOR = "moderator"
     USER = "user"
 
 
