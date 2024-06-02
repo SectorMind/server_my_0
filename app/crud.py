@@ -1,5 +1,6 @@
 # app/crud.py
 from datetime import datetime
+from typing import Type
 
 from sqlalchemy.orm import Session
 from uuid import uuid4
@@ -19,6 +20,10 @@ def create_user(db: Session, user: UserSchema):
         id=generate_id(),
         username=user.username,
         full_name=user.full_name,
+        email=user.email,
+        phone=user.phone,
+        password=user.password,
+        role=user.role,
         created_at=datetime.utcnow(),
         updated_at=datetime.utcnow()
     )
@@ -28,14 +33,18 @@ def create_user(db: Session, user: UserSchema):
     return db_user
 
 
+def get_list_of_users(db: Session, offset: int, limit) -> list[Type[User]]:
+    return db.query(User).offset(offset).limit(limit).all()
+
+
 # Read User
-def get_user(db: Session, user_id: int):
+def get_user_by_id(db: Session, user_id: int):
     return db.query(User).filter(User.id == user_id).first()
 
 
 # Update User
 def update_user(db: Session, user_id: int, user: UserSchema):
-    db_user = get_user(db, user_id)
+    db_user = get_user_by_id(db, user_id)
     if db_user:
         db_user.username = user.username
         db_user.full_name = user.full_name
@@ -47,7 +56,7 @@ def update_user(db: Session, user_id: int, user: UserSchema):
 
 # Delete User
 def delete_user(db: Session, user_id: int):
-    db_user = get_user(db, user_id)
+    db_user = get_user_by_id(db, user_id)
     if db_user:
         db.delete(db_user)
         db.commit()

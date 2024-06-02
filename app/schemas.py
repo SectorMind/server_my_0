@@ -14,7 +14,8 @@ class RoleEnum(enum.Enum):
 
 class User(BaseModel):
     id: UUID
-    user_name: str
+    username: str
+    full_name: str
     email: str
     phone: str
     password: str
