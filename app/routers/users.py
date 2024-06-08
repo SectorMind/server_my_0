@@ -10,12 +10,12 @@ from app.database import get_db
 router = APIRouter()
 
 
-@router.post("/", response_model=schemas.User)
+@router.post("/users/", response_model=schemas.User)
 def create_user(user: schemas.User, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@router.get("/{user_id}", response_model=schemas.User)
+@router.get("/users/{user_id}", response_model=schemas.User)
 def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user(db, user_id=user_id)
     if db_user is None:
@@ -23,7 +23,7 @@ def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-@router.put("/{user_id}", response_model=schemas.User)
+@router.put("/users/{user_id}", response_model=schemas.User)
 def update_user(user_id: int, user: schemas.User, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_id(db, user_id=user_id)
     if db_user is None:
@@ -31,7 +31,7 @@ def update_user(user_id: int, user: schemas.User, db: Session = Depends(get_db))
     return crud.update_user(db=db, user_id=user_id, user=user)
 
 
-@router.delete("/{user_id}", response_model=schemas.User)
+@router.delete("/users/{user_id}", response_model=schemas.User)
 def delete_user(user_id: int, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_id(db, user_id=user_id)
     if db_user is None:
@@ -39,7 +39,7 @@ def delete_user(user_id: int, db: Session = Depends(get_db)):
     return crud.delete_user(db=db, user_id=user_id)
 
 
-@router.get("/", response_model=List[schemas.User])
+@router.get("/users/", response_model=List[schemas.User])
 def read_users(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     # users = crud.get_user_by_id(db, )
     users = crud.get_list_of_users(db, skip, limit)
